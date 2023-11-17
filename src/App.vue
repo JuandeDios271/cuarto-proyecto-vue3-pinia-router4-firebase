@@ -8,7 +8,7 @@
       <button @click="userStore.logoutUser" v-if="userStore.userData">Logout</button>
     </nav>
     <div v-else>
-      Loading user...
+      Loading...
     </div>
     <router-view></router-view>
   </div>
