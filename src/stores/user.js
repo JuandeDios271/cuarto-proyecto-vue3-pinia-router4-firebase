@@ -19,21 +19,27 @@ export const useUserStore = defineStore('userStore', {
                 this.userData = {email: user.email, uid:user.uid};
                 router.push('/');
             } catch (error) {
-                console.log(error);
+                console.log(error.code);
+                return error.code;
             } finally{
                 this.loadingUser = false;
             }
 
         },
-        async loginUser(email, password){
+         async loginUser(email, password) {
             this.loadingUser = true;
             try {
-                const {user} = await signInWithEmailAndPassword(auth, email, password);
-                this.userData = {email: user.email, uid:user.uid};
+                const { user } = await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+                this.userData = { email: user.email, uid: user.uid };
                 router.push('/');
             } catch (error) {
-                console.log(error);
-            } finally{
+                console.log(error.code);
+                return error.code;
+            } finally {
                 this.loadingUser = false;
             }
         },
