@@ -26,9 +26,12 @@
                             :loading="databaseStore.loading"
                             :disabled="databaseStore.loading" >Eliminar</a-button>
                         </a-popconfirm>
+
                         <a-button
                         type="primary"
                         @click="router.push(`/editar/${item.id}`)">Editar</a-button>
+
+                        <a-button @click="copiarPortapapeles(item.id)">Copiar</a-button>
                     </a-space>
                 </template>
                 <p>{{ item.name }}</p>
@@ -42,6 +45,8 @@ import {useUserStore} from '../stores/user'
 import { useDatabaseStore } from '../stores/database';
 import {useRouter} from 'vue-router'
 import {message} from 'ant-design-vue';
+
+
 
 
 const userStore = useUserStore();
@@ -60,4 +65,30 @@ const cancel = () => {
     message.error('No se eliminó')
 };
 
+const copiarPortapapeles = async(id) => {
+
+    if(!navigator.clipboard){
+        return message.error('No se pudo copiar')
+    }
+
+    const path = `${window.location.origin}/${id}`;
+    //console.log(path);
+
+    const err = await  navigator.clipboard.writeText(path)
+    if(err){
+        message.error('No se pudo copiar');
+    } else {
+        message.success('se copío con éxito');
+    };
+
+  /*   navigator.clipboard.writeText(path)
+    .then(() => {
+        message.success('se copío con éxito');
+    })
+    .catch(err => {
+        message.error('No se pudo copiar');
+    }) */
+
+
+}
 </script>
